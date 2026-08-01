@@ -17,10 +17,12 @@ The analysis includes voltage, current, power, charging time, delivered energy, 
 
 | Team Member | Role |
 |---|---|
-| Yovany Gaspar | Project Manager and QA Lead |
-| Sa Nguyen | Modeling Lead |
-| Maya Maestas | Analysis and Validation Lead |
 | Kailey Neri | Documentation and Visualization Lead |
+| Maya Maestas | Analysis and Validation Lead |
+| Sa Nguyen | Modeling Lead |
+| Yovany Gaspar | Project Manager and QA Lead |
+
+
 
 ---
 
