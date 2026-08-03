@@ -100,13 +100,14 @@ The project template gives:
 - [ ] RMSE is reported
 - [ ] Plot title, axes, units, and legend are included
 
-### Model Results
+### 2-RC Model Results
 
 | Result | Value |
 |---|---:|
-| `tau` |  |
-| R² |  |
-| RMSE |  |
+| `tau 1` | 0.4474 |
+| `tau 2` | 22.51  |
+| R² | 0.9913 |
+| RMSE | 0.0418  |
 
 ---
 
