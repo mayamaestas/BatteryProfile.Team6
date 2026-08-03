@@ -117,7 +117,7 @@ The project template gives:
 |---|---:|---:|---|
 | Required fixed 3.6 V model |  |  | Keep |
 | Shifted one-time-constant model |  |  |  |
-| Two-time-constant model |  |  |  |
+| Two-time-constant model |  |  | Keep  |
 
 We will only keep the optional models if the required work is complete and we can clearly explain the comparison.
 
@@ -135,8 +135,8 @@ We will only keep the optional models if the required work is complete and we ca
 | Delivered energy, joules | `trapz(time,power)` | 6.8593e+03 |
 | Delivered energy, watt-hours | Joules divided by 3600 | 1.90536 |
 | Internal resistance | Source or stated assumption |  |
-| Resistive energy loss, joules | Integration of `I²R` |  |
-| Resistive energy loss, watt-hours | Joules divided by 3600 |  |
+| Resistive energy loss, joules | Integration of `I²R` | 3.1405e+03 |
+| Resistive energy loss, watt-hours | Joules divided by 3600 | 0.87236 |
 
 ### Analytical Check
 
