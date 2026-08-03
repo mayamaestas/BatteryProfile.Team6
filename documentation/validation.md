@@ -130,8 +130,8 @@ We will only keep the optional models if the required work is complete and we ca
 | Result | Definition or Method | Final Value |
 |---|---|---:|
 | Voltage rate of change | `gradient` |  |
-| Time to 80 percent charge || 36.0208 |
-| Time to 100 percent charge| |112.5650 |
+| Time to 80 percent charge | | | 36.0208 |
+| Time to 100 percent charge| | |112.5650 |
 | Delivered energy, joules | `trapz(time,power)` | 6.8593e+03 |
 | Delivered energy, watt-hours | Joules divided by 3600 | 1.90536 |
 | Internal resistance | Source or stated assumption |  |
