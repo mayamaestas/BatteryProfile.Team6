@@ -2,226 +2,174 @@
 
 **Team:** BatteryProfile.Team6  
 **Updated by:** Yovany Gaspar  
-**Date:** August 1, 2026  
+**Date:** August 6, 2026  
 
-This page keeps track of what our team has decided so far and what we still need to confirm. We are using it so everyone works from the same information while we finish the MATLAB Live Script and calculations.
+This page records the final modeling and calculation decisions used in the submitted MATLAB project. Detailed numerical checks are documented in `documentation/validation.md`.
 
----
+## Final Decisions
 
-## Current Status
-
-| Project Item | Status |
+| Project Area | Final Decision |
 |---|---|
-| Dataset loaded | Complete |
-| Cycle 1 selected | Complete |
-| Time reset to zero | Complete |
-| Charging interval selected | Needs verification |
-| One-RC model | In progress |
-| Two-time-constant model | Ready for review |
-| Voltage, current, and power plots | Ready for review |
-| Task 3 calculations | In progress |
-| Summary table | In progress |
-| Reproducibility test | Not started |
+| Dataset | Use the complete `singleCellLifeTimeData.mat` dataset |
+| Selected data | Use Cycle 1 |
+| Time | Reset Cycle 1 so time begins at zero seconds |
+| Charging interval | Use the first 301 seconds |
+| Required model | Keep the fixed-3.6-V one-RC model as the assignment baseline |
+| Additional models | Keep the shifted one-RC and two-RC models for comparison |
+| Best voltage fit | Use the two-RC model as the strongest numerical fit |
+| Current | Use measured current because no separate current model was provided |
+| Voltage rate | Calculate using MATLAB’s `gradient` function |
+| Delivered energy | Calculate by integrating measured power with `trapz` |
+| Resistive loss | Use the internal-resistance measurements recorded in the dataset |
+| Animation | Fill the battery using the normalized two-RC voltage response |
 
----
+## Dataset and Interval
 
-## Dataset
+The final project uses:
 
-We are using the MathWorks `singleCellLifeTimeData` dataset.
-
-Our current setup is:
-
-- **Selected cycle:** Cycle 1
-- **Time units:** seconds
-- **Voltage units:** volts
-- **Current units:** amperes
-
-The code resets Cycle 1 so that the time begins at zero.
-
-```matlab
-cycleData = data(data.Cycle_Index == 1, :);
-
-cycleData.DateTime = seconds( ...
-    cycleData.DateTime - cycleData.DateTime(1));
+```text
+data/singleCellLifeTimeData.mat
 ```
 
----
-
-## Charging Interval
-
-Our current code uses the first 301 seconds as the charging section.
+Cycle 1 is selected using:
 
 ```matlab
+cycleData = data(data.Cycle_Index == 1,:);
+```
+
+The cycle time is reset to zero, and the analysis uses the first 301 seconds.
+
+```matlab
+cycleData.Time_s = seconds( ...
+    cycleData.DateTime-cycleData.DateTime(1));
+
 chargeData = cycleData( ...
-    cycleData.DateTime <= 301, :);
+    cycleData.Time_s <= 301,:);
 ```
 
-We still need to confirm from the voltage and current graphs that 301 seconds is the correct endpoint.
+The 301-second interval was retained because it matches the charging segment used in the team’s original modeling work.
 
-- **Current interval:** 0 to 301 seconds
-- **Status:** Needs verification
-- **Reason:** To be confirmed during the August 1 meeting
+## Voltage Models
 
----
+Three voltage models are included.
 
-## Required One-RC Model
+### Required Fixed-3.6-V One-RC Model
 
-The project template asks us to use:
+This model is kept because it is required by the project instructions. It produced the weakest fit because it assumes the battery begins at zero volts.
 
-`V(t) = Vmax(1 - exp(-t/tau))`
+### Shifted One-RC Model
 
-The required values are:
+This model includes the measured starting voltage and produced a better fit than the required model.
 
-- `Vmax = 3.6 V`
-- `tau` is the fitted time constant
+### Two-RC Model
 
-We still need to confirm that the final Live Script includes this exact model with 3.6 V fixed.
+This model represents a fast voltage response and a slower voltage response. It produced the highest R-squared value and lowest RMSE.
 
-### Still Needed
+| Model | R-squared | RMSE |
+|---|---:|---:|
+| Required fixed-3.6-V one-RC | 0.2458 | 0.3854 V |
+| Shifted one-RC | 0.9109 | 0.1332 V |
+| Two-RC | 0.9913 | 0.0418 V |
 
-- [ ] Run or verify the fixed 3.6 V model
-- [ ] Record `tau`
-- [ ] Record R-squared
-- [ ] Record RMSE
-- [ ] Plot the measured and fitted voltage together
+**Final model decision:** The required model remains the official baseline, while the two-RC model is identified as the best numerical description of the selected voltage response.
 
----
+## Current, Power, and Energy
 
-## Shifted One-Time-Constant Model
+Measured current is used because the project does not provide a separate current-versus-time equation.
 
-Our current code also uses a model with a starting voltage:
-
-`V(t) = V0 + A(1 - exp(-t/tau))`
-
-We tested this because the real battery does not begin at zero volts.
-
-- `V0` is the starting voltage
-- `A` is the voltage increase
-- `tau` is the time constant
-
-We will compare this model with the required model and explain whether including the starting voltage improves the fit.
-
----
-
-## Two-Time-Constant Model
-
-We also tested:
-
-`V(t) = V0 + A1(1 - exp(-t/tau1)) + A2(1 - exp(-t/tau2))`
-
-This is an extra model and is not required by the original project.
-
-We will only keep it if:
-
-1. The required project work is completed first.
-2. It improves the results.
-3. We can explain what the extra parameters mean.
-
-- **Current status:** Ready for review
-- **Final decision:** Not made yet
-
----
-
-## Current and Power
-
-Power is calculated using:
-
-`P = V × I`
-
-Our current code is:
+Power is calculated using matching measured voltage and current samples:
 
 ```matlab
-power = chargeData.Voltage .* chargeData.Current;
+powerDelivered_W = ...
+    voltageMeasured .* currentMeasured;
 ```
 
-We still need to confirm whether charging current is positive or negative in the dataset.
-
-This decision affects how we calculate delivered power and total energy.
-
-### Still Needed
-
-- [ ] Check the current sign
-- [ ] Keep the original sign in the current graph
-- [ ] Use positive delivered power for the energy calculation
-- [ ] Explain the sign convention in the final project
-
----
-
-## Charge Thresholds
-
-We have not finalized how we will define 80 percent and full charge.
-
-One option for 80 percent is:
-
-`V80 = Vinitial + 0.80(3.6 - Vinitial)`
-
-This would mean 80 percent of the voltage increase from the starting voltage to 3.6 V.
-
-For practical full charge, we still need to decide whether to use:
-
-- The first measured point at 3.6 V
-- A 99 percent threshold
-- The final point in the charging interval
-
-### Still Needed
-
-- [ ] Approve the 80 percent definition
-- [ ] Approve the practical full-charge definition
-- [ ] Use the same definitions in the code and summary table
-
----
-
-## Energy and Resistance
-
-Total delivered energy will be calculated from the power-versus-time data using `trapz`.
+Delivered energy is calculated using:
 
 ```matlab
-energyDelivered_J = trapz( ...
-    chargeData.DateTime, ...
-    powerDelivered);
+energyDelivered_J = ...
+    trapz(x,powerDelivered_W);
 ```
 
-Resistive power loss will be estimated using:
+The final delivered-energy result is approximately:
 
-`P_loss = I^2R`
+```text
+6859.3 J
+1.9054 Wh
+```
 
-We still need to agree on an internal-resistance value. We will either use a reliable source or clearly state that the value is an assumption.
+## Charging-Time Definitions
 
-### Still Needed
+The required-model time to 80 percent is calculated from the required exponential equation.
 
-- [ ] Confirm the power sign
-- [ ] Calculate total energy in joules
-- [ ] Convert energy to watt-hours
-- [ ] Select and justify internal resistance
-- [ ] Calculate resistive energy loss
+Five time constants are used only as a mathematical practical-full estimate.
 
----
+Measured charging behavior is reported separately:
 
-## Decisions for the August 1 Meeting
+| Measured Result | Value |
+|---|---:|
+| Time to 80% of the observed voltage rise | 20.4860 s |
+| Maximum measured voltage | 3.5557 V |
+| Time of maximum measured voltage | 300.4845 s |
 
-- [ ] Confirm the 301-second charging endpoint
-- [ ] Confirm the current sign
-- [ ] Verify the fixed 3.6 V model
-- [ ] Record `tau`, R-squared, and RMSE
-- [ ] Approve the 80 percent definition
-- [ ] Approve the full-charge definition
-- [ ] Select an internal-resistance value
-- [ ] Decide whether the two-time-constant model stays
-- [ ] Finish the derivative calculation
-- [ ] Finish the energy calculations
-- [ ] Create the summary table
+The maximum measured-voltage time is not described as an exact 100 percent state-of-charge measurement.
 
----
+## Internal Resistance and Energy Loss
 
-## Before We Call the Project Finished
+The primary resistive-loss calculation uses the internal-resistance values recorded in the dataset.
 
-Another teammate needs to download the files and run the Live Script without fixing file paths or missing information.
+```matlab
+resistivePowerLoss_W = ...
+    currentMeasured.^2 .* resistanceUsed_Ohm;
 
-The final run should recreate:
+resistiveEnergyLoss_J = ...
+    trapz(x,resistivePowerLoss_W);
+```
 
-- All required graphs
-- Model-fit results
-- Charging-time results
-- Energy calculations
-- Resistive-loss estimate
-- Final summary table
+The primary result is approximately:
+
+```text
+Representative resistance: 0.017634 ohm
+Resistive energy loss: 230.45 J
+Resistive energy loss: 0.06401 Wh
+```
+
+Alternative resistance methods from Sa and Maya are kept only as validation comparisons because they use different resistance definitions.
+
+## Battery Animation
+
+The GIF uses the normalized two-RC voltage response.
+
+The battery:
+
+- Fills from left to right
+- Remains yellow from 0% through 79%
+- Changes to green from 80% through 100%
+- Displays normalized modeled-voltage progress
+
+The displayed percentage is not presented as the battery’s exact state of charge.
+
+## Final Output Decision
+
+The final repository includes:
+
+- MATLAB Live Script
+- Plain MATLAB code
+- PDF report
+- Final figures
+- CSV result tables
+- Validation documentation
+- Reproducibility instructions
+- Battery-charging GIF
+
+Detailed calculations and comparisons are located in:
+
+```text
+documentation/validation.md
+```
+
+Instructions for testing the project are located in:
+
+```text
+tests/README.md
+```
