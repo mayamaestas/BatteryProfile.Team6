@@ -73,8 +73,6 @@ The following folders should contain the exported results:
 The final GIF should show a battery that:
 
 - Fills according to the normalized two-RC voltage response
-- Appears yellow from 0% through 79%
-- Changes to green from 80% through 100%
 
 ## Pass Criteria
 
