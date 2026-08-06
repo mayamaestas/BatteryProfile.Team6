@@ -1,121 +1,88 @@
-# Reproducibility Check
+# Reproducibility Tests
 
-**Team:** BatteryProfile.Team6  
-**Updated by:** Yovany Gaspar  
-**Submission Deadline:** August 6, 2026  
+This folder documents the checks used to confirm that the final MATLAB project runs correctly and reproduces the team’s results.
 
-This page records our final testing process. The goal is to confirm that another teammate can download the repository, follow the instructions, and run the official MATLAB Live Script without fixing missing files or changing personal file paths.
+## Required Test File
 
----
+Open:
 
-## Current Status
+`live_script/BatteryProfile_Team6_Final.mlx`
 
-| Item | Status |
-|---|---|
-| Official Live Script confirmed | Not yet |
-| Official Live Script uploaded | Not yet |
-| MATLAB version recorded | Not yet |
-| Required toolboxes recorded | Not yet |
-| First complete run | Not started |
-| Fresh-download test | Not started |
-| Second teammate test | Not started |
+Use:
 
----
+`data/singleCellLifeTimeData.mat`
 
-## Test Information
+## Test Procedure
 
-**Tester:**  
+1. Open the final Live Script in MATLAB.
+2. Select **Run All**.
+3. Choose `singleCellLifeTimeData.mat` when prompted.
+4. Confirm that Cycle 1 is selected.
+5. Confirm that the selected interval extends from 0 to approximately 301 seconds.
+6. Confirm that all model-fitting sections run without errors.
+7. Confirm that figures and CSV tables are exported.
+8. Run the optional battery-animation section separately.
 
-**Date tested:**  
+## Data Checks
 
-**Commit tested:**  
+- [x] The selected MAT file contains a variable named `data`
+- [x] The `data` variable is a MATLAB table
+- [x] The full dataset contains `Cycle_Index`
+- [x] Cycle 1 is present
+- [x] Time, voltage, current, and resistance variables are present
+- [x] The selected interval contains enough data points
+- [x] Invalid resistance values are handled before integration
 
-**MATLAB version:**  
+## Model Checks
 
-**Required toolboxes:**  
+- [x] Required fixed-3.6-V one-RC model runs
+- [x] Only `tau` is fitted in the required model
+- [x] Shifted one-RC model runs
+- [x] Two-RC model runs
+- [x] R-squared and RMSE values are reported
+- [x] Measured and fitted voltage curves are plotted together
 
-**Official Live Script:**  
+## Expected Approximate Results
 
----
+| Result | Expected Value |
+|---|---:|
+| Required-model tau | 0.3871 s |
+| Required-model R-squared | 0.2458 |
+| Required-model RMSE | 0.3854 V |
+| Shifted one-RC tau | 7.902 s |
+| Shifted one-RC R-squared | 0.9109 |
+| Shifted one-RC RMSE | 0.1332 V |
+| Two-RC tau1 | 0.4474 s |
+| Two-RC tau2 | 22.51 s |
+| Two-RC R-squared | 0.9913 |
+| Two-RC RMSE | 0.0418 V |
+| Measured 80% rise time | 20.4860 s |
+| Maximum measured voltage | 3.5557 V |
+| Delivered energy | 6859.3 J |
 
-## Repository Check
+Small differences caused by numerical precision are acceptable.
 
-- [ ] The official `.mlx` file is located in `live_script/`
-- [ ] The dataset loads correctly
-- [ ] No personal file paths are required
-- [ ] The README instructions match the repository
-- [ ] All required folders and files are included
-- [ ] Duplicate or outdated project files have been removed
+## Output Checks
 
----
+The following folders should contain the exported results:
 
-## Run-All Test
+- `results/figures`
+- `results/tables`
+- `results/animations`
 
-- [ ] Downloaded or cloned a fresh copy of the repository
-- [ ] Opened the official MATLAB Live Script
-- [ ] Selected **Run All**
-- [ ] The script completed without stopping
-- [ ] No unresolved errors appeared
-- [ ] Warnings were reviewed
-- [ ] Results matched `documentation/validation.md`
+The final GIF should show a battery that:
 
----
+- Fills according to the normalized two-RC voltage response
+- Appears yellow from 0% through 79%
+- Changes to green from 80% through 100%
 
-## Output Check
+## Pass Criteria
 
-- [ ] Measured and fitted voltage figure was created
-- [ ] Voltage, current, and power figure was created
-- [ ] Voltage rate-of-change result was created
-- [ ] `tau`, R-squared, and RMSE were reported
-- [ ] Charge-time results were reported
-- [ ] Delivered-energy result was reported
-- [ ] Resistive-loss result was reported
-- [ ] Final summary table was created
+The project passes the reproducibility test when:
 
----
-
-## Test Result
-
-- [ ] Passed
-- [ ] Passed after corrections
-- [ ] Did not pass
-
-**Problem found:**  
-
-**Correction made:**  
-
-**Correction commit:**  
-
-**Retest result:**  
-
----
-
-## Second Teammate Test
-
-**Tester:**  
-
-**Date tested:**  
-
-**Commit tested:**  
-
-- [ ] Downloaded a fresh repository copy
-- [ ] Followed the README instructions
-- [ ] Ran the official Live Script
-- [ ] Recreated the required figures and table
-- [ ] Confirmed the documented results
-
-**Notes:**  
-
----
-
-## Final Approval
-
-- [ ] First clean run passed
-- [ ] Second teammate run passed
-- [ ] Final commit was recorded
-- [ ] Repository was reviewed before submission
-- [ ] Proof of submission was saved
-
-**Approved by:**  
-
+- The Live Script runs from beginning to end without errors
+- The expected model values are reproduced closely
+- The figures and tables are generated
+- The battery GIF is created successfully
+- The results match the values documented in `documentation/validation.md`
 **Date approved:**  
