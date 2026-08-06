@@ -1,0 +1,7 @@
+Metric,Value,Units
+Two-RC RMSE reduction versus required model,89.1553548050209,%
+Two-RC RMSE reduction versus shifted one-RC,68.612276562997,%
+Voltage-rate decrease factor from 2 s to 200 s,174.366059345984,factor
+Primary resistive loss as fraction of delivered energy,3.35961888619292,%
+Primary loss below reproduced Maya-method loss,93.0552212261156,%
+Maya-method loss difference from Maya PDF,1.31011984849715,%

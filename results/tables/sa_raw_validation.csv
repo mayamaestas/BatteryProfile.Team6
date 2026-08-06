@@ -1,0 +1,6 @@
+Metric,SaPDFValue,CurrentRunValue,AbsoluteDifference,PercentDifference
+Measured 80 percent threshold,3.2476,3.24761088,1.08800000004905e-05,0.000335016627678609
+Measured time to 80 percent rise,20.486,20.486,0,0
+Maximum measured voltage,3.5557,3.5556803,1.96999999997338e-05,0.000554039992117834
+Time of maximum measured voltage,300.4845,300.4845,0,0
+Delivered energy,6859.3,6859.26345762102,0.0365423789753549,0.000532742101604463

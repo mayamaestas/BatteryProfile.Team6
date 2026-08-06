@@ -1,0 +1,8 @@
+Metric,MayaPDFValue,CurrentRunValue,AbsoluteDifference,PercentDifference,Method
+Peak voltage rate near 2 s,0.058114,0.0581139056607738,9.43392261809617e-08,0.000162334766460684,gradient at nearest measured time
+Plateau voltage rate near 200 s,0.00033329,0.00033328679835255,3.20164744981597e-09,0.000960619115429796,gradient at nearest measured time
+Time to 80 percent,36.0208,36.019922421957,0.000877578043002814,0.00243630914083755,1.6 times two-RC tau2
+Time to 100 percent,112.565,112.562257568616,0.0027424313843909,0.00243630914084387,5 times two-RC tau2
+Delivered energy,6859.3,6859.26345762102,0.0365423789753549,0.000532742101604463,trapz of measured V times measured I
+Equivalent resistance,0.3337,0.329283073922091,0.00441692607790922,1.32362183934948,R0 plus fitted amplitudes divided by average current
+Internal resistive energy loss,3362.3,3318.24984033398,44.0501596660197,1.31011984849715,average-current equivalent-resistance estimate

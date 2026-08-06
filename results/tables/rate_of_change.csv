@@ -1,0 +1,4 @@
+ChargingStage,Time_s,Voltage_V,dVdt_V_per_s
+Steep initial rise,2,2.8412457,0.0581139056607738
+Transition,20,3.2384882,0.0114768910734083
+Plateau,200,3.5208197,0.00033328679835255

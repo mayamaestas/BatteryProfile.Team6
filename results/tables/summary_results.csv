@@ -1,0 +1,21 @@
+Metric,Value,Units
+Selected cycle,1,cycle
+Selected interval end,301,s
+Required-model tau,0.387074003120717,s
+Required-model R-squared,0.245827106903468,unitless
+Required-model RMSE,0.385398494618154,V
+Voltage rate at 2 s,0.0581139056607738,V/s
+Voltage rate at 20 s,0.0114768910734083,V/s
+Voltage rate at 200 s,0.00033328679835255,V/s
+Required-model time to 80 percent,0.622971575540117,s
+Required-model practical full time,1.93537001560358,s
+Practical full percentage at 5 tau,99.3262053000915,%
+Measured 80 percent-rise threshold,3.24761088,V
+Measured time to 80 percent rise,20.486,s
+Maximum measured voltage,3.5556803,V
+Measured practical full-charge time in selected interval,300.4845,s
+Delivered energy,6859.26345762102,J
+Delivered energy,1.90535096045028,Wh
+Representative internal resistance,0.017634364,Ohm
+Resistive energy loss,230.445110575965,J
+Resistive energy loss,0.064012530715546,Wh
