@@ -1,3 +1,1 @@
-dataFile = matlab.internal.examples.downloadSupportFile("predmaint","batteryagingdata/singlecell/v1/singleCellLifeTimeData.zip");
-unzip(dataFile)
-load("singleCellLifeTimeData.mat")
+
